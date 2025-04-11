@@ -15,10 +15,10 @@ import {route} from "ziggy-js";
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <Link :href="route('dashboard')" class="sidebar-link">
                     <i class="bx bxs-user-account"></i>
-                    <span>Profile</span>
-                </a>
+                    <span>Dashboard</span>
+                </Link>
             </li>
             <!--            normal link-->
             <li class="sidebar-item">

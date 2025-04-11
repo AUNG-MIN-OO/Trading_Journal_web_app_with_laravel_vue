@@ -28,17 +28,17 @@ class TradeSeeder extends Seeder
                 'profit' => 10000
             ],
             [
-                'date' => now()->subDays(2),
+                'date' => now()->subDays(3),
                 'symbol' => 'EURUSD',
                 'entry_price' => 3000,
                 'stop_loss_price' => 2995,
                 'profit_target_price' => 3035,
-                'type' => 'buy',
+                'type' => 'sell',
                 'outcome' => 'lose',
-                'profit' => 8000
+                'profit' => -8000
             ],
             [
-                'date' => now()->subDays(2),
+                'date' => now()->subDays(7),
                 'symbol' => 'CADUSD',
                 'entry_price' => 3000,
                 'stop_loss_price' => 2995,

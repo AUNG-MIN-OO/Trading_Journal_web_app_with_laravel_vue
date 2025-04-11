@@ -1,7 +1,101 @@
 <script setup>
 
-import Layout from "@/Layout/Layout.vue";
+import {onMounted, ref} from "vue";
 import Flash from "@/Components/Flash.vue";
+import Layout from "@/Layout/Layout.vue";
+
+const chartRef = ref(null)
+const barChartRef = ref(null)
+
+const { balanceHistory, stats, monthlyProfits } = defineProps({
+    balanceHistory: Array,
+    stats: Object,
+    monthlyProfits: Array
+})
+
+let chartInstance = null
+let barChartInstance = null
+
+onMounted(() => {
+    // Line Chart: Balance History
+    if (chartRef.value && balanceHistory.length > 0) {
+        const ctx = chartRef.value.getContext('2d')
+
+        const chartData = {
+            labels: balanceHistory.map(entry => entry.date),
+            datasets: [{
+                label: 'Balance Over Time',
+                data: balanceHistory.map(entry => entry.balance),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 3,
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+            }]
+        }
+
+        if (chartInstance) chartInstance.destroy()
+
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: { font: { size: 12 } }
+                    },
+                    tooltip: { mode: 'index', intersect: false },
+                },
+                scales: {
+                    x: { title: { display: true, text: 'Date' }},
+                    y: { title: { display: true, text: 'Balance' }, beginAtZero: false }
+                }
+            }
+        })
+    }
+
+    // Bar Chart: Monthly Profit
+    if (barChartRef.value && monthlyProfits.length > 0) {
+        const ctxBar = barChartRef.value.getContext('2d')
+
+        const barData = {
+            labels: monthlyProfits.map(entry => entry.month),
+            datasets: [{
+                label: 'Monthly Profit',
+                data: monthlyProfits.map(entry => entry.profit),
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        }
+
+        if (barChartInstance) barChartInstance.destroy()
+
+        barChartInstance = new Chart(ctxBar, {
+            type: 'bar',
+            data: barData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Month' }},
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Profit ($)' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { mode: 'index', intersect: false },
+                }
+            }
+        })
+    }
+})
 
 </script>
 
@@ -21,16 +115,8 @@ import Flash from "@/Components/Flash.vue";
                                 Balance
                             </h6>
                             <p class="fw-bold mb-2">
-                                ${{$page.props.auth.user.balance}}
+                                ${{ stats.balance }}
                             </p>
-                            <div class="mb-0">
-                                <span class="badge text-success me-2">
-                                    +9.0%
-                                </span>
-                                <span class="fw-bold">
-                                    Since Last Month
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,16 +127,8 @@ import Flash from "@/Components/Flash.vue";
                                 Overall profit/loss
                             </h6>
                             <p class="fw-bold mb-2">
-                                +1000
+                                <span>{{stats.profit>0?'+':'-'}}</span>{{stats.profit}}
                             </p>
-                            <div class="mb-0">
-                                <span class="badge text-success me-2">
-                                    +9.0%
-                                </span>
-                                <span class="fw-bold">
-                                    Since Last Month
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,60 +139,24 @@ import Flash from "@/Components/Flash.vue";
                                 Win Rate (%)
                             </h6>
                             <p class="fw-bold mb-2">
-                                89%
+                                {{ stats.winRate }}%
                             </p>
-                            <div class="mb-0">
-                                <span class="badge text-success me-2">
-                                    +9.0%
-                                </span>
-                                <span class="fw-bold">
-                                    Since Last Month
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-7">
-                    <h3 class="fw-bold fs-4 my-3">
-                        Users
-                    </h3>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr class="highlight">
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <h3 class="fw-bold fs-4 my-3">Daily Profits</h3>
+                    <div style="height: 400px;">
+                        <canvas ref="chartRef"></canvas>
+                    </div>
                 </div>
                 <div class="col-12 col-md-5">
-                    <h3 class="fw-bold fs-4 my-3">
-                        Reports Overview
-                    </h3>
-                    <canvas id="line-chart" width="800" height="450"></canvas>
+                    <h3 class="fw-bold fs-4 my-3">Monthly Profits</h3>
+                    <div style="height: 400px;">
+                        <canvas ref="barChartRef"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,5 +164,8 @@ import Flash from "@/Components/Flash.vue";
 </template>
 
 <style scoped>
-
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
 </style>

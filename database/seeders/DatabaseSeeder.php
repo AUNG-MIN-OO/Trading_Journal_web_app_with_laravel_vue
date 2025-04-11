@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('aungminoo'),
+            'balance' => 50000,
         ]);
 
         $this->call(StrategySeeder::class);
