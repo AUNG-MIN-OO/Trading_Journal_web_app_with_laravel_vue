@@ -16,6 +16,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Register"/>
     <section class="bg-light py-3 py-md-5 py-xl-8">
         <div class="container">
             <div class="row justify-content-center">

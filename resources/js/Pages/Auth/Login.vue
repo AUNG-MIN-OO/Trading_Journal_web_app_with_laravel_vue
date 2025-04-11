@@ -2,6 +2,7 @@
 
 import {route} from "ziggy-js";
 import {useForm} from "@inertiajs/vue3";
+import Flash from "@/Components/Flash.vue";
 
 const form = useForm({
     email : null,
@@ -18,6 +19,7 @@ const submit = ()=>{
 
 <template>
     <Head title="Login"/>
+    <Flash/>
     <section class="bg-light py-3 py-md-5 py-xl-8 vh-100">
         <div class="container">
             <div class="row justify-content-center">

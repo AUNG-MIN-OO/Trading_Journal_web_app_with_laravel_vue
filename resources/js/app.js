@@ -1,6 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap styles
-import '../css/app.css'; // Your custom styles
-import 'bootstrap'; // Bootstrap JS (optional, depending on your need)
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/app.css';
+import * as bootstrap from 'bootstrap'; // Import Bootstrap properly
+
+// Attach to window for global access in components
+window.bootstrap = bootstrap;
+
 
 import { createApp, h } from 'vue'
 import {createInertiaApp, Head, Link} from '@inertiajs/vue3'
@@ -19,7 +23,7 @@ createInertiaApp({
             .mount(el)
     },
     progress: {
-        color: '#fff',
+        color: '#0b0f19',
         includeCSS: true,
         showSpinner: true,
     },

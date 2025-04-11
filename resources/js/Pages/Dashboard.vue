@@ -1,9 +1,12 @@
 <script setup>
 
 import Layout from "@/Layout/Layout.vue";
+import Flash from "@/Components/Flash.vue";
 </script>
 
 <template>
+    <Head title="Dashboard"/>
+    <Flash/>
     <Layout>
         <div class="mb-3">
             <h3 class="fw-bold fs-4 mb-3">
@@ -14,7 +17,7 @@ import Layout from "@/Layout/Layout.vue";
                     <div class="card shadow card-css">
                         <div class="card-body py-4">
                             <h6 class="mb-2 fw-bold">
-                                Member Progress
+                                Balance
                             </h6>
                             <p class="fw-bold mb-2">
                                 $100000
@@ -34,10 +37,10 @@ import Layout from "@/Layout/Layout.vue";
                     <div class="card shadow card-css">
                         <div class="card-body py-4">
                             <h6 class="mb-2 fw-bold">
-                                Member Progress
+                                Overall profit/loss
                             </h6>
                             <p class="fw-bold mb-2">
-                                $100000
+                                +1000
                             </p>
                             <div class="mb-0">
                                 <span class="badge text-success me-2">
@@ -54,10 +57,10 @@ import Layout from "@/Layout/Layout.vue";
                     <div class="card shadow card-css">
                         <div class="card-body py-4">
                             <h6 class="mb-2 fw-bold">
-                                Member Progress
+                                Win Rate (%)
                             </h6>
                             <p class="fw-bold mb-2">
-                                $100000
+                                89%
                             </p>
                             <div class="mb-0">
                                 <span class="badge text-success me-2">

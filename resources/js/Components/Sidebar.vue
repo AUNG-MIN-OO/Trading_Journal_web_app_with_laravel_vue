@@ -1,5 +1,6 @@
 <script setup>
 
+import {route} from "ziggy-js";
 </script>
 
 <template>
@@ -70,10 +71,10 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
+                <Link :href="route('settings')" class="sidebar-link">
                     <i class="bx bxs-cog"></i>
                     <span>Settings</span>
-                </a>
+                </Link>
             </li>
         </ul>
         <div class="sidebar-footer">

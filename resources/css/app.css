@@ -2,8 +2,10 @@
 
 /* Override primary color */
 :root {
-    --bs-primary: #0b0f19!important; /* Example: Tomato red */
-    --bs-secondary: #323c55!important; /* Example: Gray */
+    --bs-primary: #0b0f19; /* Example: Tomato red */
+    --bs-secondary: #323c55; /* Example: Gray */
+    --bs-success: #20f986;
+    --bs-danger: #f70d1a;
 }
 
 body {
@@ -36,6 +38,26 @@ li{
 .btn-primary {
     background-color: var(--bs-primary) !important;
     border-color: var(--bs-primary) !important;
+}
+
+.bg-success{
+    background-color: var(--bs-success)!important;
+    color: var(--bs-primary)!important;
+}
+
+.bg-danger{
+    background-color: var(--bs-danger)!important;
+    color: #ffffff;
+}
+
+.text-bg-success{
+    background-color: var(--bs-success)!important;
+    color: var(--bs-primary)!important;
+}
+
+.text-bg-danger{
+    background-color: var(--bs-danger)!important;
+    color: #ffffff;
 }
 
 #sidebar{
