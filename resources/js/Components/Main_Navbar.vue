@@ -25,10 +25,10 @@ import {route} from "ziggy-js";
                             <i class='bx bx-candles'></i>
                             <span>Dashboard</span>
                         </Link>
-                        <a href="#" class="dropdown-item">
+                        <Link :href="route('trades.show')" class="dropdown-item">
                             <i class='bx bx-candles'></i>
                             <span>Trades</span>
-                        </a>
+                        </Link>
                         <div class="dropdown-divider"></div>
                         <Link :href="route('settings')" class="dropdown-item">
                             <i class="bx bx-cog"></i>

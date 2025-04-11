@@ -22,10 +22,10 @@ import {route} from "ziggy-js";
             </li>
             <!--            normal link-->
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
-                    <i class="bx bxs-layer"></i>
-                    <span>Tasks</span>
-                </a>
+                <Link :href="route('trades.show')" class="sidebar-link">
+                    <i class='bx bx-candles'></i>
+                    <span>Trades</span>
+                </Link>
             </li>
             <!--            button with one-step link-->
             <li class="sidebar-item">

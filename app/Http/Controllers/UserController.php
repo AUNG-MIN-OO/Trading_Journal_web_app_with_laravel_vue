@@ -72,4 +72,19 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Avatar updated successfully');
     }
+
+    public function updateBalance(Request $request){
+
+        $formData = $request->validate([
+            'balance' => 'required|numeric|max:1000000',
+        ]);
+
+        $user = Auth::user();
+
+        $user->update([
+            'balance' => $formData['balance']
+        ]);
+
+        return redirect()->back()->with('success', 'Balance updated successfully');
+    }
 }

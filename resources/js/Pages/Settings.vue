@@ -1,14 +1,18 @@
 <script setup>
 
 import Layout from "@/Layout/Layout.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import {route} from "ziggy-js";
 import Flash from "@/Components/Flash.vue";
 import {ref} from "vue";
 
+const { props } = usePage();  // Access the shared page props (which includes the user) as $page is not working
+const user = props.auth.user;
+
 const form = useForm({
     avatar : null,
     preview : null,
+    balance : user.balance,
 })
 
 const fileInput = ref(null)
@@ -23,11 +27,18 @@ const handleAvatarChange = (e)=>{
 }
 
 const submit = ()=>{
-    form.post(route('settings.updateAvatar'),{
+    form.post(route('settings.update.avatar'),{
         onSuccess: () => {
             form.avatar=""
             form.preview = null
             inputKey.value = Date.now() // force re-render of file input
+        }
+    })
+}
+
+const submitBalance = ()=>{
+    form.post(route('settings.update.balance'),{
+        onSuccess : () => {
         }
     })
 }
@@ -63,6 +74,18 @@ const submit = ()=>{
                             >
                                 Update Profile Avatar
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div>
+                        <label for="balance">Edit Account Balance</label>
+                        <div class="d-flex col-12 col-md-4">
+                            <input type="text" class="form-control" v-model="form.balance">
+                            <button class="btn btn-sm btn-primary ms-3" @click.prevent="submitBalance" :disabled="form.processing">Update</button>
                         </div>
                     </div>
                 </div>

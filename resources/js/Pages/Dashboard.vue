@@ -2,6 +2,7 @@
 
 import Layout from "@/Layout/Layout.vue";
 import Flash from "@/Components/Flash.vue";
+
 </script>
 
 <template>
@@ -20,7 +21,7 @@ import Flash from "@/Components/Flash.vue";
                                 Balance
                             </h6>
                             <p class="fw-bold mb-2">
-                                $100000
+                                ${{$page.props.auth.user.balance}}
                             </p>
                             <div class="mb-0">
                                 <span class="badge text-success me-2">
